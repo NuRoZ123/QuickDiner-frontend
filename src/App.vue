@@ -1,26 +1,18 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div class="flex flex-col h-full">
+        <navbar-component></navbar-component>
+        <content-component></content-component>
+    </div>
+    <option-menu-component></option-menu-component>
 </template>
 
-<script>
-import HelloWorld from './components/HelloWorld.vue'
+<script setup>
 
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+import NavbarComponent from "@/components/navbar/navbarComponent.vue";
+import OptionMenuComponent from "@/components/option-menu/optionMenuComponent.vue";
+import ContentComponent from "@/components/content/contentComponent.vue";
+
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 </style>
