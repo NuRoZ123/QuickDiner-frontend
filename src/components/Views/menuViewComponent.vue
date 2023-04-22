@@ -4,7 +4,6 @@
         <restaurant-component-menu :restaurant="storeRestaurant.restaurant"></restaurant-component-menu>
         <div class="flex flex-row justify-evenly flex-wrap mt-8">
             <menu-component v-for="menu in storeMenu.menus" :key="menu.id" :menu="menu"></menu-component>
-            <menu-component v-for="menu in storeMenu.menus" :key="menu.id" :menu="menu"></menu-component>
         </div>
 
     </div>

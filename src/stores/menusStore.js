@@ -3,7 +3,7 @@ import {defineStore} from "pinia";
 const apiUrl = 'https://quick-diner.k-gouzien.fr'
 
 const menuStore = defineStore("menuStore", {
-    states : () => ({
+    state : () => ({
         menus : [],
     }),
     actions : {

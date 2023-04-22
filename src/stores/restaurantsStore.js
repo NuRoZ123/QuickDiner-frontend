@@ -3,7 +3,7 @@ import {defineStore} from "pinia";
 const apiUrl = 'https://quick-diner.k-gouzien.fr'
 
 export const restaurantsStore = defineStore('restaurantsStore', {
-    states : () => ({
+    state : () => ({
         restaurants : [],
         restaurant: {}
     }),

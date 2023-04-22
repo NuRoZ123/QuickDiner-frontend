@@ -9,7 +9,7 @@ import {
     faArrowLeft, faBars,
     faBasketShopping,
     faMagnifyingGlass,
-    faMapMarkerAlt,
+    faMapMarkerAlt, faMinus, faPlus, faTrash,
     faXmark
 } from "@fortawesome/free-solid-svg-icons";
 import {createRouter, createWebHistory} from "vue-router";
@@ -20,8 +20,9 @@ import MenuViewComponent from "@/components/Views/menuViewComponent.vue";
 
 import {createPinia} from "pinia";
 import {authStore} from "@/stores/authStore";
+import UserViewComponent from "@/components/Views/userViewComponent.vue";
 
-library.add(faMagnifyingGlass, faBasketShopping, faXmark, faMapMarkerAlt, faArrowLeft, faBars)
+library.add(faMagnifyingGlass, faBasketShopping, faXmark, faMapMarkerAlt, faArrowLeft, faBars, faPlus, faMinus, faTrash)
 
 const router = createRouter({
     history: createWebHistory(),
@@ -46,6 +47,12 @@ const router = createRouter({
             path: '/restaurant/:id',
             name: 'restaurant',
             component: MenuViewComponent
+        },
+        {
+            path: '/profile',
+            name : 'profile',
+            component: UserViewComponent,
+            meta: { requiresConnected: true }
         }
     ]
 })
@@ -56,14 +63,16 @@ createApp(App)
     .component('font-awesome-icon', FontAwesomeIcon)
     .mount('#app')
 
-
 router.beforeEach((to, from, next) => {
     const isAuthenticated = authStore().token; // Vérifie si l'utilisateur est authentifié
-    const requiresGuest = to.matched.some(record => record.meta.requiresGuest); // Vérifie si la route est accessible uniquement pour les utilisateurs non connectés
+    const requiresGuest = to.matched.some(record => record.meta.requiresGuest);
+    const requiresConnected = to.matched.some(record => record.meta.requiresConnected);
 
     if (requiresGuest && isAuthenticated) {
-        next('/'); // Redirige l'utilisateur vers la page d'accueil si déjà connecté
+        next('/')
+    } else if (requiresConnected && !isAuthenticated) {
+        next('/')
     } else {
-        next(); // Laisse l'utilisateur accéder à la page
+        next()
     }
 });

@@ -1,15 +1,15 @@
 <script setup>
-import {reactive} from "vue";
 import {panierMenu, toggleMenu} from "@/utils";
 import {useRoute} from "vue-router";
 import {authStore} from "@/stores/authStore";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
-const listOfMenus = reactive([])
+import {panierStore} from "@/stores/panierStore";
 
 const route = useRoute()
 
 
 const storeAuth = authStore()
+const storePanier = panierStore()
 
 </script>
 
@@ -23,7 +23,7 @@ const storeAuth = authStore()
       </div>
       <router-link v-if="route.name !== 'authentification' && !storeAuth.token" class="block py-2 px-4 text-gray-800 col-start-2" :to="{ name: 'authentification'}" @click="toggleMenu = false"><button class="bg-gray-200 rounded-3xl p-2 px-4">Connexion</button></router-link>
       <div class="col-start-2 cursor-pointer" v-if="route.name !== 'authentification' && storeAuth.token">
-          <button class="bg-gray-200 rounded-3xl p-2 px-4">{{storeAuth.user}}</button>
+          <router-link :to="{name : 'profile'}"><button class="bg-gray-200 rounded-3xl p-2 px-4">{{storeAuth.user}}</button></router-link>
       </div>
 
       <div v-if="route.name === 'home'" class="relative col-start-3 col-end-7">
@@ -33,7 +33,7 @@ const storeAuth = authStore()
 
       <div v-if="route.name === 'home' || route.name === 'restaurant'" class="col-start-8 flex items-center justify-between relative">
           <button type="button" class="text-white bg-black rounded-3xl p-2 w-full mr-8" @click="panierMenu = true"><font-awesome-icon icon="fa-solid fa-basket-shopping" class="mr-2"></font-awesome-icon>Panier</button>
-          <span v-if="listOfMenus.length" class="ml-4 rounded-3xl bg-white text-black w-6 h-6 absolute flex justify-center items-center right-5 top-2">{{listOfMenus.length}}</span>
+          <span v-if="storePanier.panier && storePanier.panier.length > 0 " class="ml-4 rounded-3xl bg-white text-black w-6 h-6 absolute flex justify-center items-center right-5 top-2">{{storePanier.panier.length}}</span>
       </div>
   </nav>
 </template>

@@ -3,7 +3,7 @@ import {defineStore} from "pinia";
 const apiUrl = 'https://quick-diner.k-gouzien.fr'
 
 const authStore = defineStore('authStore', {
-    states : () => ({
+    state : () => ({
         token : "",
         user : ""
     }),
@@ -40,6 +40,37 @@ const authStore = defineStore('authStore', {
             const parts = this.token.split('.')
             const payload = JSON.parse(atob(parts[1]))
             this.user = JSON.parse(payload.sub).nom.toUpperCase() + ' ' + JSON.parse(payload.sub).prenom
+        },
+        async updateUser(user) {
+            await fetch(`${apiUrl}/api/user`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    'Authorization' : `Bearer ${this.token}`
+                },
+                body : JSON.stringify(user)
+            }).then(async (result) => {
+                if (result.status !== 400)  {
+                    this.token = await result.text()
+                    localStorage.setItem('token', this.token)
+                    await this.reconnect()
+                }
+            })
+        },
+        async deleteAccount() {
+            await fetch(`${apiUrl}/api/user`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    'Authorization' : `Bearer ${this.token}`
+                }
+            })
+
+            this.token = ""
+            localStorage.clear()
+
         }
     }
 })
