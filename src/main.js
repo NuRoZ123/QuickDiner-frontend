@@ -21,8 +21,9 @@ import MenuViewComponent from "@/components/Views/menuViewComponent.vue";
 import {createPinia} from "pinia";
 import {authStore} from "@/stores/authStore";
 import UserViewComponent from "@/components/Views/userViewComponent.vue";
+import {faFile} from "@fortawesome/free-regular-svg-icons";
 
-library.add(faMagnifyingGlass, faBasketShopping, faXmark, faMapMarkerAlt, faArrowLeft, faBars, faPlus, faMinus, faTrash)
+library.add(faMagnifyingGlass, faBasketShopping, faXmark, faMapMarkerAlt, faArrowLeft, faBars, faPlus, faMinus, faTrash, faFile)
 
 const router = createRouter({
     history: createWebHistory(),

@@ -5,7 +5,9 @@ const apiUrl = 'https://quick-diner.k-gouzien.fr'
 const authStore = defineStore('authStore', {
     state : () => ({
         token : "",
-        user : ""
+        user : "",
+        typeOfAccount: [],
+        errors : []
     }),
     actions : {
         async register (user) {
@@ -16,6 +18,11 @@ const authStore = defineStore('authStore', {
                     'Access-Control-Allow-Origin': '*',
                 },
                 body : JSON.stringify(user)
+            }).then(async (result) => {
+                if (result.status === 400)  {
+                    this.pushErrors(await result.text())
+                    return false
+                }
             })
         },
 
@@ -32,6 +39,8 @@ const authStore = defineStore('authStore', {
                     this.token = await result.text()
                     localStorage.setItem('token', this.token)
                     await this.reconnect()
+                } else {
+                    this.pushErrors("Veuillez spécifier un user existant")
                 }
             })
         },
@@ -67,10 +76,24 @@ const authStore = defineStore('authStore', {
                     'Authorization' : `Bearer ${this.token}`
                 }
             })
-
             this.token = ""
             localStorage.clear()
+        },
 
+        async getTypeOfAccount() {
+            await fetch(`${apiUrl}/api/user/types`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                }
+            }).then(async (response) => this.typeOfAccount = await response.json())
+        },
+        pushErrors(err) {
+            this.errors.push(err)
+        },
+        resetErrors() {
+            this.errors = []
         }
     }
 })

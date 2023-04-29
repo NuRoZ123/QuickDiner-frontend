@@ -10,11 +10,15 @@ import OptionMenuComponent from "@/components/option-menu/optionMenuComponent.vu
 import {authStore} from "@/stores/authStore";
 import PanierMenu from "@/components/panier/panierMenu.vue";
 import DeleteAccount from "@/components/auth/deleteAccount.vue";
+import {panierStore} from "@/stores/panierStore";
 
 const storeAuth = authStore()
+const storePanier = panierStore()
 
 if (localStorage.getItem('token')) {
     storeAuth.reconnect()
+    storePanier.getPanierUserConnected()
+    console.log(storePanier.panier)
 }
 </script>
 

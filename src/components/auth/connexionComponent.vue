@@ -9,7 +9,7 @@
           <input v-model="user.password" class="px-2 py-1 w-full rounded-md mb-6 border-gray-300 border" type="password" id="passwordLogin" placeholder="password">
       </div>
 
-      <router-link :to="{ name: 'home'}"><button class="rounded-3xl w-[560px] py-2 bg-black text-white" type="submit" @click="loginUser()">Login</button></router-link>
+      <button class="rounded-3xl w-[560px] py-2 bg-black text-white" type="submit" @click="loginUser()">Login</button>
 
   </div>
 </template>
@@ -17,8 +17,13 @@
 <script setup>
 import {reactive} from "vue";
 import {authStore} from "@/stores/authStore";
+import {panierStore} from "@/stores/panierStore";
+import {useRouter} from "vue-router";
 
 const storeAuth = authStore()
+const storePanier = panierStore()
+
+const router = useRouter()
 
 const user = reactive({
     email : '',
@@ -26,7 +31,29 @@ const user = reactive({
 })
 
 const loginUser = async () => {
-    await storeAuth.authenticate(user)
+
+    storeAuth.resetErrors()
+
+    if (!user.email) {
+        storeAuth.pushErrors("Renseignez votre email")
+    }
+
+    if (!user.password) {
+        storeAuth.pushErrors("Renseignez votre mot de passe")
+    }
+
+    if(user.password && user.email){
+        await storeAuth.authenticate(user)
+    }
+
+    if(storeAuth.errors.length === 0) {
+        if(storeAuth.token) {
+            await storePanier.getPanierUserConnected()
+            await router.push('/')
+        }
+    } else {
+        setTimeout(storeAuth.resetErrors , 2000)
+    }
 }
 
 </script>
