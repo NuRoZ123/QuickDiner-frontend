@@ -5,7 +5,8 @@
 
         <div class="mt-20">
             <ul>
-                <router-link class="block py-2 px-4 text-gray-800 hover:bg-gray-200" :to="{ name: 'home'}" @click="toggleMenu = false">Accueil</router-link>
+                <router-link v-if="storeAuth.role !== 'Commercant'" class="block py-2 px-4 text-gray-800 hover:bg-gray-200" :to="{ name: 'home'}" @click="toggleMenu = false">Accueil</router-link>
+                <router-link v-if="storeAuth.role === 'Commercant'" class="block py-2 px-4 text-gray-800 hover:bg-gray-200" :to="{ name: 'commerce'}" @click="toggleMenu = false">Commerce</router-link>
                 <router-link v-if="storeAuth.token" class="block py-2 px-4 text-gray-800 hover:bg-gray-200" :to="{ name: 'commandes'}" @click="toggleMenu = false">Commandes</router-link>
                 <router-link v-if="!storeAuth.token" class="block py-2 px-4 text-gray-800 hover:bg-gray-200" :to="{ name: 'authentification'}" @click="toggleMenu = false">Connexion / Register</router-link>
                 <router-link v-if="storeAuth.token" class="block py-2 px-4 text-gray-800 hover:bg-gray-200" :to="{ name: 'profile'}" @click="toggleMenu = false">Profil</router-link>

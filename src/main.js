@@ -9,7 +9,7 @@ import {
     faArrowLeft, faBars,
     faBasketShopping,
     faMagnifyingGlass,
-    faMapMarkerAlt, faMinus, faPlus, faTrash,
+    faMapMarkerAlt, faMinus, faPen, faPlus, faTrash,
     faXmark
 } from "@fortawesome/free-solid-svg-icons";
 import {createRouter, createWebHistory} from "vue-router";
@@ -24,7 +24,7 @@ import UserViewComponent from "@/components/Views/userViewComponent.vue";
 import {faFile} from "@fortawesome/free-regular-svg-icons";
 import CommercantViewComponent from "@/components/Views/commercantViewComponent.vue";
 
-library.add(faMagnifyingGlass, faBasketShopping, faXmark, faMapMarkerAlt, faArrowLeft, faBars, faPlus, faMinus, faTrash, faFile)
+library.add(faMagnifyingGlass, faBasketShopping, faXmark, faMapMarkerAlt, faArrowLeft, faBars, faPlus, faMinus, faTrash, faFile, faPen)
 
 const router = createRouter({
     history: createWebHistory(),
