@@ -22,6 +22,7 @@ import {createPinia} from "pinia";
 import {authStore} from "@/stores/authStore";
 import UserViewComponent from "@/components/Views/userViewComponent.vue";
 import {faFile} from "@fortawesome/free-regular-svg-icons";
+import CommercantViewComponent from "@/components/Views/commercantViewComponent.vue";
 
 library.add(faMagnifyingGlass, faBasketShopping, faXmark, faMapMarkerAlt, faArrowLeft, faBars, faPlus, faMinus, faTrash, faFile)
 
@@ -31,7 +32,8 @@ const router = createRouter({
         {
             path: '/',
             name: 'home',
-            component: HomeViewComponent
+            component: HomeViewComponent,
+            meta : {requiresNotCommercant: true}
         },
         {
             path: '/commandes',
@@ -54,6 +56,12 @@ const router = createRouter({
             name : 'profile',
             component: UserViewComponent,
             meta: { requiresConnected: true }
+        },
+        {
+            path: '/commerce',
+            name : 'commerce',
+            component: CommercantViewComponent,
+            meta : {requiresConnected: true}
         }
     ]
 })
@@ -65,15 +73,22 @@ createApp(App)
     .mount('#app')
 
 router.beforeEach((to, from, next) => {
-    const isAuthenticated = authStore().token; // Vérifie si l'utilisateur est authentifié
-    const requiresGuest = to.matched.some(record => record.meta.requiresGuest);
-    const requiresConnected = to.matched.some(record => record.meta.requiresConnected);
+    const isAuthenticated = authStore().token
+    const isClient = authStore().role
+    const requiresGuest = to.matched.some(record => record.meta.requiresGuest)
+    const requiresConnected = to.matched.some(record => record.meta.requiresConnected)
+    const requiresNotCommercant = to.matched.some(record => record.meta.requiresNotCommercant)
 
     if (requiresGuest && isAuthenticated) {
         next('/')
     } else if (requiresConnected && !isAuthenticated) {
         next('/')
-    } else {
+    } else if (requiresNotCommercant && isAuthenticated && isClient === 'Commercant') {
+        next('commerce')
+    } else if (!requiresNotCommercant && isAuthenticated && isClient === 'Client') {
+        next('/')
+    }
+    else {
         next()
     }
-});
+})

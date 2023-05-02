@@ -19,14 +19,23 @@
 <script setup>
 import {toggleMenu} from "@/utils";
 import {authStore} from "@/stores/authStore";
+import {useRouter} from "vue-router";
+import {panierStore} from "@/stores/panierStore";
+import {commandesStore} from "@/stores/commandesStore";
 
 const storeAuth = authStore()
+const router = useRouter()
+const storeCommandes = commandesStore()
 
 const logout = () => {
     localStorage.clear()
     storeAuth.token = ""
     storeAuth.user = ""
+    storeCommandes.clearCommandes()
     toggleMenu.value = false
+    panierStore().clearPanier()
+
+    router.push('/')
 }
 </script>
 

@@ -78,6 +78,16 @@ const panierStore = defineStore("panierStore", {
         },
         async clearPanier() {
             this.panier = []
+            if(localStorage.getItem("token")) {
+                await fetch(`${apiUrl}/api/user/panier/all`, {
+                    method: "DELETE",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': '*',
+                        'Authorization': `Bearer ${localStorage.getItem("token")}`
+                    }
+                })
+            }
         },
         async getPanierUserConnected() {
             // description

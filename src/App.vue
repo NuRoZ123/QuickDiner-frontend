@@ -11,14 +11,20 @@ import {authStore} from "@/stores/authStore";
 import PanierMenu from "@/components/panier/panierMenu.vue";
 import DeleteAccount from "@/components/auth/deleteAccount.vue";
 import {panierStore} from "@/stores/panierStore";
+import {commandesStore} from "@/stores/commandesStore";
 
 const storeAuth = authStore()
 const storePanier = panierStore()
+const storeCommande = commandesStore()
 
 if (localStorage.getItem('token')) {
     storeAuth.reconnect()
-    storePanier.getPanierUserConnected()
-    console.log(storePanier.panier)
+    if (storeAuth.role === 'Client') {
+        storeCommande.getCommandes()
+        storePanier.getPanierUserConnected()
+    } else {
+        storeCommande.getCommandesCommercant()
+    }
 }
 </script>
 

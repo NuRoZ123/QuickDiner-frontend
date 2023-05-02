@@ -48,7 +48,9 @@ const loginUser = async () => {
 
     if(storeAuth.errors.length === 0) {
         if(storeAuth.token) {
-            await storePanier.getPanierUserConnected()
+            if(storeAuth.role === 'Client') {
+                await storePanier.getPanierUserConnected()
+            }
             await router.push('/')
         }
     } else {

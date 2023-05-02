@@ -7,7 +7,8 @@ const authStore = defineStore('authStore', {
         token : "",
         user : "",
         typeOfAccount: [],
-        errors : []
+        errors : [],
+        role : ""
     }),
     actions : {
         async register (user) {
@@ -49,6 +50,7 @@ const authStore = defineStore('authStore', {
             const parts = this.token.split('.')
             const payload = JSON.parse(atob(parts[1]))
             this.user = JSON.parse(payload.sub).nom.toUpperCase() + ' ' + JSON.parse(payload.sub).prenom
+            this.role = JSON.parse(payload.sub).role
         },
         async updateUser(user) {
             await fetch(`${apiUrl}/api/user`, {

@@ -8,7 +8,7 @@
         </div>
         <div class="w-full h-20 bg-white flex flex-col items-center justify-center">
             <span>{{totalPrice()}} €</span>
-            <button type="button" class="text-white bg-black rounded-3xl p-2 w-auto mt-8">Commander</button>
+            <button type="button" class="text-white bg-black rounded-3xl p-2 w-auto mt-8" @click="sendCommande()">Commander</button>
         </div>
     </div>
 </template>
@@ -17,8 +17,32 @@
 import {panierMenu} from "@/utils";
 import MenuInPanier from "@/components/panier/menuInPanier.vue";
 import {panierStore} from "@/stores/panierStore";
+import {commandesStore} from "@/stores/commandesStore";
+import {authStore} from "@/stores/authStore";
+import {useRouter} from "vue-router";
 
 const storePanier = panierStore()
+const storeCommande = commandesStore()
+const storeAuth = authStore()
+
+const router = useRouter()
+
+const sendCommande = async () => {
+    const commande = []
+
+    for (let storePanierProduit of storePanier.panier) {
+        commande.push({id: storePanierProduit.id, quantite: storePanierProduit.quantity})
+    }
+
+    if(storeAuth.token) {
+        await storeCommande.sendCommande(commande)
+        await storePanier.clearPanier()
+        panierMenu.value = false
+    } else {
+        await router.push('/authentification')
+        panierMenu.value = false
+    }
+}
 
 const clearPanier = () => {
     storePanier.clearPanier()

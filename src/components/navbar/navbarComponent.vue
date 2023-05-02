@@ -31,7 +31,7 @@ const storePanier = panierStore()
           <font-awesome-icon icon="fa-solid fa-magnifying-glass" class="absolute top-1/2 left-4 -translate-y-1/2"></font-awesome-icon>
       </div>
 
-      <div v-if="route.name === 'home' || route.name === 'restaurant'" class="col-start-8 flex items-center justify-between relative">
+      <div v-if="(route.name === 'home' || route.name === 'restaurant') && (storeAuth.role === 'Client' || storeAuth.role === '')" class="col-start-8 flex items-center justify-between relative">
           <button type="button" class="text-white bg-black rounded-3xl p-2 w-full mr-8" @click="panierMenu = true"><font-awesome-icon icon="fa-solid fa-basket-shopping" class="mr-2"></font-awesome-icon>Panier</button>
           <span v-if="storePanier.panier && storePanier.panier.length > 0 " class="ml-4 rounded-3xl bg-white text-black w-6 h-6 absolute flex justify-center items-center right-5 top-2">{{storePanier.panier.length}}</span>
       </div>
