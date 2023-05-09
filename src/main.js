@@ -33,12 +33,13 @@ const router = createRouter({
             path: '/',
             name: 'home',
             component: HomeViewComponent,
-            meta : {requiresNotCommercant: true}
+            meta : {isNotCommercant : true}
         },
         {
             path: '/commandes',
             name: 'commandes',
-            component: CommandeViewComponent
+            component: CommandeViewComponent,
+            meta: { requiresConnected: true }
         },
         {
             path: '/authentification',
@@ -49,7 +50,7 @@ const router = createRouter({
         {
             path: '/restaurant/:id',
             name: 'restaurant',
-            component: MenuViewComponent
+            component: MenuViewComponent,
         },
         {
             path: '/profile',
@@ -61,7 +62,7 @@ const router = createRouter({
             path: '/commerce',
             name : 'commerce',
             component: CommercantViewComponent,
-            meta : {requiresConnected: true}
+            meta : {isCommercant : true}
         }
     ]
 })
@@ -77,16 +78,30 @@ router.beforeEach((to, from, next) => {
     const isClient = authStore().role
     const requiresGuest = to.matched.some(record => record.meta.requiresGuest)
     const requiresConnected = to.matched.some(record => record.meta.requiresConnected)
-    const requiresNotCommercant = to.matched.some(record => record.meta.requiresNotCommercant)
+    const isNotCommercant = to.matched.some(record => record.meta.isNotCommercant)
+    const isCommercant = to.matched.some(record => record.meta.isCommercant)
 
-    if (requiresGuest && isAuthenticated) {
-        next('/')
-    } else if (requiresConnected && !isAuthenticated) {
-        next('/')
-    } else if (requiresNotCommercant && isAuthenticated && isClient === 'Commercant') {
+
+    if (isAuthenticated  && isClient === "Cient" && isNotCommercant) {
+        next()
+    } else if(!isAuthenticated && isClient === "" && isNotCommercant){
+        next()
+    } else if (isAuthenticated && isClient === "Commercant" && isNotCommercant) {
         next('commerce')
-    } else if (!requiresNotCommercant && isAuthenticated && isClient === 'Client') {
+    } else if (isAuthenticated && isCommercant && isClient === "Commercant") {
+        next()
+    } else if (isAuthenticated && isCommercant && isClient === "Client") {
         next('/')
+    } else if (!isAuthenticated && isCommercant && isClient === "") {
+        next('/')
+    } else if (isAuthenticated && requiresConnected && isClient !== "") {
+        next()
+    } else if (!isAuthenticated && requiresConnected && isClient === "") {
+        next('/')
+    } else if (requiresGuest && isAuthenticated) {
+        next('/')
+    } else if (requiresGuest && !isAuthenticated) {
+        next()
     }
     else {
         next()

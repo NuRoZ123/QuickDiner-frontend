@@ -17,7 +17,46 @@ export const commandesStore = defineStore('commandesStore', {
                     'Authorization': `Bearer ${localStorage.getItem("token")}`
                 },
             })
-                .then(async (result) => this.commandes = await result.json())
+                .then(async (result) => {
+                    this.commandes = await result.json()
+                    this.commandes.forEach(commands => {
+                        commands.completed = true
+                        commands.produitsCommander.forEach(produit => {
+                            if (produit.etat === "En cours") {
+                                commands.completed = false
+                            }
+                        })
+
+                    })
+                })
+                .then(() => {
+                    if (this.ws === null) {
+                        this.ws = new WebSocket(`ws://k-gouzien.fr:86/websocket/user/commandes`)
+
+                        this.ws.onmessage = (e) => {
+
+                            if(!JSON.parse(e.data).Success && !JSON.parse(e.data).Error) {
+                                const commandeUpdate = JSON.parse(e.data)
+                                if (commandeUpdate.message) {
+                                    this.commandes.forEach(command => {
+                                        if(command.id === commandeUpdate.id) {
+                                            command.completed = true
+                                        }
+                                    })
+                                }
+                            }
+                        }
+
+                        this.ws.onopen = () => {
+                            this.ws.send(JSON.stringify({token: `Bearer ${localStorage.getItem("token")}`}))
+                        }
+
+                        this.ws.onclose = () => {
+
+                        }
+
+                    }
+                })
         },
         async getCommandesCommercant () {
             await fetch(`${apiUrl}/api/restaurants/commandes`, {
@@ -29,14 +68,32 @@ export const commandesStore = defineStore('commandesStore', {
                 },
             })
                 .then(async (result) => {
-                    this.commandes = await result.json()
+                this.commandes = await result.json()
+                this.commandes.forEach(commands => {
+                    commands.completed = true
+                    commands.produitsCommander.forEach(produit => {
+                        if (produit.etat === "En cours") {
+                            commands.completed = false
+                        }
+                    })
+
+                })
+            })
+                .then(() => {
                     if (this.ws === null) {
                         this.ws = new WebSocket(`ws://k-gouzien.fr:86/websocket/restaurants/commandes`)
 
                         this.ws.onmessage = (e) => {
 
                             if(!JSON.parse(e.data).Success && !JSON.parse(e.data).Error) {
-                                this.commandes.push(JSON.parse(e.data))
+                                const commandeUpdate = JSON.parse(e.data)
+                                if (commandeUpdate.message) {
+                                    this.commandes.forEach(command => {
+                                        if(command.id === commandeUpdate.id) {
+                                            command.completed = true
+                                        }
+                                    })
+                                }
                             }
                         }
 
@@ -64,6 +121,25 @@ export const commandesStore = defineStore('commandesStore', {
         },
         clearCommandes() {
             this.commandes = []
+        },
+        clearWs () {
+            this.ws = null
+        },
+        async updateCommandes(id) {
+            await fetch(`${apiUrl}/api/user/commandes/${id}/termine`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    'Authorization': `Bearer ${localStorage.getItem("token")}`
+                },
+            }).then(() =>
+                this.commandes.forEach(command => {
+                    if(command.id === id) {
+                        command.completed = true
+                    }
+                })
+            )
         }
     }
 })

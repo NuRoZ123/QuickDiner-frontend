@@ -5,10 +5,10 @@ const apiUrl = 'https://quick-diner.k-gouzien.fr'
 const produitStore = defineStore("produitStore", {
     state : () => ({
         produits : [],
-        restaurantOwn: {}
+        restaurantOwn: {id:0}
     }),
     actions : {
-        async getAllProduits() {
+        async getOwnRestaurant() {
             await fetch(`${apiUrl}/api/restaurants/own`, {
                 method: "GET",
                 headers: {
@@ -17,14 +17,17 @@ const produitStore = defineStore("produitStore", {
                     'Authorization': `Bearer ${localStorage.getItem("token")}`
                 },
             }).then(async (result) => this.restaurantOwn = await result.json())
-
-            await fetch(`${apiUrl}/api/produits/${this.restaurantOwn.id}`, {
-                method: "GET",
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': '*',
-                },
-            }).then(async (result) => this.produits = await result.json())
+        },
+        async getAllProduits() {
+            await this.getOwnRestaurant().then(async () => {
+                await fetch(`${apiUrl}/api/produits/${this.restaurantOwn.id}`, {
+                    method: "GET",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': '*',
+                    },
+                }).then(async (result) => this.produits = await result.json())
+            })
         },
         async addProduit(produit) {
             await fetch(`${apiUrl}/api/produits`, {

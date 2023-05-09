@@ -7,7 +7,6 @@ import {panierStore} from "@/stores/panierStore";
 
 const route = useRoute()
 
-
 const storeAuth = authStore()
 const storePanier = panierStore()
 
@@ -16,7 +15,7 @@ const storePanier = panierStore()
 <template>
   <nav class="grid grid-cols-8 gap-4 h-20 flex items-center justify-center">
       <div class="col-start-1 flex justify-center items-center">
-          <RouterLink v-if="route.name === 'restaurant'" :to="{name : 'home'}"><button class="bg-black rounded-3xl text-white py-1 px-3"><font-awesome-icon icon="fa-solid fa-arrow-left"></font-awesome-icon> Retour</button></RouterLink>
+          <RouterLink v-if="route.name === 'restaurant' && storeAuth.role !== 'Commercant'" :to="{name : 'home'}"><button class="bg-black rounded-3xl text-white py-1 px-3"><font-awesome-icon icon="fa-solid fa-arrow-left"></font-awesome-icon> Retour</button></RouterLink>
           <div class="rounded-3xl hover:bg-gray-200 w-10 h-10 flex flex-col justify-center items-center cursor-pointer ml-4" @click="toggleMenu = true">
               <font-awesome-icon icon="fa-solid fa-bars"></font-awesome-icon>
           </div>

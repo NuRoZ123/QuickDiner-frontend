@@ -12,10 +12,14 @@ import PanierMenu from "@/components/panier/panierMenu.vue";
 import DeleteAccount from "@/components/auth/deleteAccount.vue";
 import {panierStore} from "@/stores/panierStore";
 import {commandesStore} from "@/stores/commandesStore";
+import {produitStore} from "@/stores/produitStore";
+import {commentaireVoteStore} from "@/stores/commentaireVoteStore";
 
 const storeAuth = authStore()
 const storePanier = panierStore()
 const storeCommande = commandesStore()
+const storeProduit = produitStore()
+const storeCommentaireVote = commentaireVoteStore()
 
 if (localStorage.getItem('token')) {
     storeAuth.reconnect()
@@ -24,6 +28,9 @@ if (localStorage.getItem('token')) {
         storePanier.getPanierUserConnected()
     } else {
         storeCommande.getCommandesCommercant()
+        storeProduit.getOwnRestaurant().then(() => {
+            storeCommentaireVote.getAllCommentaires(storeProduit.restaurantOwn.id)
+        })
     }
 }
 </script>

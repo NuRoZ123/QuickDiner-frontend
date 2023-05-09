@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col mx-8 mt-8">
         <div class="flex flex-row">
-            <div class="h-20 w-20 bg-gray-400"></div>
+            <img class="h-20 w-20" :src="menu.image" :alt="`${menu.nom}-image`">
             <div class="flex flex-col ml-2">
                 <span class="font-bold">{{menu.nom}}</span>
                 <span>{{menu.prix}} €</span>
