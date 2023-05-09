@@ -7,9 +7,15 @@
                 <menu-component v-for="menu in storeMenu.menus" :key="menu.id" :menu="menu"></menu-component>
             </div>
 
-            <div class="h-96 w-full bg-gray-500">
+            <span class="text-3xl flex w-full justify-center items-center my-4">Commentaires</span>
+
+            <div class="h-auto w-full flex flex-col justify-center items-center mt-16">
+                <commentaire-modif-component v-if="storeAuth.role === 'Client'"></commentaire-modif-component>
                 <commentaire-component v-for="commentaireVote of storeCommentaireVote.commentaires" :key="commentaireVote" :commentaire="commentaireVote"></commentaire-component>
             </div>
+
+
+
         </div>
     </div>
 </template>
@@ -23,13 +29,18 @@ import {restaurantsStore} from "../../stores/restaurantsStore";
 import RestaurantComponentMenu from "@/components/restaurant/restaurantComponentMenu.vue";
 import CommentaireComponent from "@/components/commentaires/commentaireComponent.vue";
 import {commentaireVoteStore} from "@/stores/commentaireVoteStore";
+import CommentaireModifComponent from "@/components/commentaires/commentaireModifComponent.vue";
+import {authStore} from "@/stores/authStore";
 const storeMenu = menuStore()
 const storeRestaurant = restaurantsStore()
 const storeCommentaireVote = commentaireVoteStore()
+const storeAuth = authStore()
 const route = useRoute()
+
 
 storeMenu.getAllMenu(route.params.id)
 storeRestaurant.getRestaurant(route.params.id)
+storeCommentaireVote.getAllCommentaires(route.params.id)
 
 </script>
 

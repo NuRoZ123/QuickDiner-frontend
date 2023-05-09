@@ -71,6 +71,9 @@ const produitStore = defineStore("produitStore", {
                     this.produits[deletingProduit] = produit
                 }
             )
+        },
+        clearRestaurantOwn() {
+            this.restaurantOwn = {id:0}
         }
     }
 })

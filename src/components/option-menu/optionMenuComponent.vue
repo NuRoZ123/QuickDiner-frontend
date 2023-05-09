@@ -5,7 +5,7 @@
 
         <div class="mt-20">
             <ul>
-                <router-link v-if="storeAuth.role === 'Commercant' && storeProduit.restaurantOwn !== null" class="block py-2 px-4 text-gray-800 hover:bg-gray-200" :to="{ name: 'restaurant', params: { id: storeProduit.restaurantOwn.id}}" @click="toggleMenu = false">Restaurant</router-link>
+                <router-link v-if="storeAuth.role === 'Commercant' && storeProduit.restaurantOwn.id !== 0" class="block py-2 px-4 text-gray-800 hover:bg-gray-200" :to="{ name: 'restaurant', params: { id: storeProduit.restaurantOwn.id}}" @click="toggleMenu = false">Restaurant</router-link>
                 <router-link v-if="storeAuth.role !== 'Commercant'" class="block py-2 px-4 text-gray-800 hover:bg-gray-200" :to="{ name: 'home'}" @click="toggleMenu = false">Accueil</router-link>
                 <router-link v-if="storeAuth.role === 'Commercant'" class="block py-2 px-4 text-gray-800 hover:bg-gray-200" :to="{ name: 'commerce'}" @click="toggleMenu = false">Commerce</router-link>
                 <router-link v-if="storeAuth.token" class="block py-2 px-4 text-gray-800 hover:bg-gray-200" :to="{ name: 'commandes'}" @click="toggleMenu = false">Commandes</router-link>
@@ -37,6 +37,7 @@ const logout = () => {
     storeAuth.user = ""
     storeCommandes.clearCommandes()
     storeCommandes.clearWs()
+    storeProduit.clearRestaurantOwn()
     toggleMenu.value = false
     panierStore().clearPanier()
 

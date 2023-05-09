@@ -15,6 +15,17 @@ const commentaireVoteStore = defineStore('commentaireVoteStore', {
                     'Access-Control-Allow-Origin': '*',
                 }
             }).then(async (result) => this.commentaires = await result.json())
+        },
+        async createCommentaireVote(id, commentaireVote) {
+            await fetch(`${apiUrl}/api/user/comment/${id}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    'Authorization': `Bearer ${localStorage.getItem("token")}`
+                },
+                body: JSON.stringify(commentaireVote)
+            }).then(async (result) => this.commentaires = await result.json())
         }
     }
 })
