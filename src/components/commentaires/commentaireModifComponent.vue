@@ -4,6 +4,7 @@ import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import {authStore} from "@/stores/authStore";
 import {useRoute} from "vue-router";
 import {commentaireVoteStore} from "@/stores/commentaireVoteStore";
+import {range} from "lodash";
 
 const storeCommentaireVote = commentaireVoteStore()
 const storeAuth = authStore()
@@ -39,7 +40,7 @@ const createCommentaire = () => {
               </div>
 
               <div class="w-auto">
-                  <font-awesome-icon v-for="i in 5" :key="i" icon="fa-solid fa-star" :class="i < commentaireVote.note ? 'text-yellow-300' : 'text-gray-500'" @click="setCommentaireNote(i+1)"  />
+                  <font-awesome-icon v-for="i in range(1,6)" :key="i" icon="fa-solid fa-star" :class="i <= commentaireVote.note ? 'text-yellow-300' : 'text-gray-500'" @click="setCommentaireNote(i)"  />
               </div>
           </div>
           <div class="w-auto mx-10 relative">

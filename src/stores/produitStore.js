@@ -56,7 +56,7 @@ const produitStore = defineStore("produitStore", {
             )
         },
         async modifyProduit(produit) {
-            console.log(produit)
+
             await fetch(`${apiUrl}/api/produits`, {
                 method: "PUT",
                 headers: {

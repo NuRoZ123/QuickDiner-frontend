@@ -1,6 +1,7 @@
 <script setup>
 import {defineProps} from 'vue'
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+import {range} from "lodash";
 defineProps(['commentaire'])
 </script>
 
@@ -12,7 +13,7 @@ defineProps(['commentaire'])
               <span class="font-bold flex items-center">{{commentaire.nomUtilisateur}}</span>
           </div>
           <div class="w-auto">
-              <font-awesome-icon v-for="i in 5" :key="i" icon="fa-solid fa-star" :class="i < commentaire.note ? 'text-yellow-300' : 'text-gray-500'"  />
+              <font-awesome-icon v-for="i in range(1,6)" :key="i" icon="fa-solid fa-star" :class="i-1 < commentaire.note ? 'text-yellow-300' : 'text-gray-500'"  />
           </div>
       </div>
       <div class=" ml-8">

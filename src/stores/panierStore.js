@@ -121,8 +121,6 @@ const panierStore = defineStore("panierStore", {
 
                     const listOfProduct = panier.produitPaniers
 
-                    console.log(listOfProduct)
-
                     _.forEach(listOfProduct, product => {
                         this.panier.push({
                             description: product.produit.description,

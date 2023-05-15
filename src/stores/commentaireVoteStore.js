@@ -25,7 +25,7 @@ const commentaireVoteStore = defineStore('commentaireVoteStore', {
                     'Authorization': `Bearer ${localStorage.getItem("token")}`
                 },
                 body: JSON.stringify(commentaireVote)
-            }).then(async (result) => this.commentaires = await result.json())
+            })
         }
     }
 })
