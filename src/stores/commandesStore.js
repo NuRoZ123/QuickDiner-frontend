@@ -31,7 +31,7 @@ export const commandesStore = defineStore('commandesStore', {
                 })
                 .then(() => {
                     if (this.ws === null) {
-                        this.ws = new WebSocket(`wss://k-gouzien.fr:86/websocket/user/commandes`)
+                        this.ws = new WebSocket(`ws://k-gouzien.fr:86/websocket/user/commandes`)
 
                         this.ws.onmessage = (e) => {
 
@@ -81,7 +81,7 @@ export const commandesStore = defineStore('commandesStore', {
             })
                 .then(() => {
                     if (this.ws === null) {
-                        this.ws = new WebSocket(`wss://k-gouzien.fr:86/websocket/restaurants/commandes`)
+                        this.ws = new WebSocket(`ws://k-gouzien.fr:86/websocket/restaurants/commandes`)
 
                         this.ws.onmessage = (e) => {
 
