@@ -90,24 +90,6 @@ const panierStore = defineStore("panierStore", {
             }
         },
         async getPanierUserConnected() {
-            // description
-            //     :
-            //     "Le meilleurs wrap que vous aurez jamais gouter de toutes votre vie (ou presque)"
-            // id
-            //     :
-            //     7
-            // image
-            //     :
-            //     "https://quick-diner.k-gouzien.fr/api/produits/7/image"
-            // nom
-            //     :
-            //     "Mac Wrap"
-            // prix
-            //     :
-            //     2
-            // quantity
-            //     :
-            //     1
             if(localStorage.getItem("token")) {
                 await fetch(`${apiUrl}/api/user/panier`, {
                     method: "GET",
