@@ -3,7 +3,7 @@
       <div class="flex flex-row justify-center h-20 items-center">
           <div class="flex flex-col w-96">
               <span class="font-bold">{{menu.nom}}</span>
-              <span>{{menu.description}}</span>
+              <span class="whitespace-pre-line">{{ menu.description }}</span>
               <span>{{menu.prix}} €</span>
           </div>
           <img class="h-20 w-20" :src="menu.image" :alt="`${menu.nom}-image`">
@@ -27,6 +27,8 @@ const props = defineProps(['menu'])
 const storePanier = panierStore()
 const storeAuth = authStore()
 
+
+console.log(props.menu)
 const getQuantity = (addOrRemove) => {
     if(addOrRemove === "plus") {
 
@@ -35,6 +37,7 @@ const getQuantity = (addOrRemove) => {
         storePanier.removeProduitId(props.menu.id)
     }
 }
+
 </script>
 
 <style scoped>

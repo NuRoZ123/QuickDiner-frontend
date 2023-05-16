@@ -15,8 +15,8 @@ const deleteProduit = () => {
 </script>
 
 <template>
-  <div class="flex flex-col shadow w-96 mx-4 my-12 border border-gray-200 items-center" :class="[toggleModifyProduct ? 'h-[304px]' :'h-72']">
-      <div v-if="!toggleModifyProduct" class="h-72">
+  <div class="flex flex-col shadow w-96 mx-4 mt-12 border border-gray-200 items-center" :class="[toggleModifyProduct ? 'h-[304px]' :'h-72']">
+      <div v-if="!toggleModifyProduct" class="h-auto">
           <div class="flex justify-center items-center w-full justify-around">
               <img :src="produit.image" :alt="`image-${produit.nom}`" class="w-28 h-28">
               <div class="flex flex-col w-60 ml-5">

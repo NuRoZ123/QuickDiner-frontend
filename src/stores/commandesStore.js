@@ -81,6 +81,7 @@ export const commandesStore = defineStore('commandesStore', {
                 })
             })
                 .then(() => {
+                    this.ws = null
                     if (this.ws === null) {
                         this.ws = new WebSocket(`ws://k-gouzien.fr:86/websocket/restaurants/commandes`)
 

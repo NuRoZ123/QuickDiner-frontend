@@ -16,7 +16,7 @@ defineProps(['commentaire'])
               <font-awesome-icon v-for="i in range(1,6)" :key="i" icon="fa-solid fa-star" :class="i-1 < commentaire.note ? 'text-yellow-300' : 'text-gray-500'"  />
           </div>
       </div>
-      <div class=" ml-8">
+      <div class="ml-8 whitespace-pre-line">
           {{commentaire.commentaire}}
       </div>
   </div>

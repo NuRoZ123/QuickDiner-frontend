@@ -38,7 +38,10 @@ const produitStore = defineStore("produitStore", {
                     'Authorization': `Bearer ${localStorage.getItem("token")}`
                 },
                 body:JSON.stringify([produit])
-            }).then(async () => this.produits.push(produit))
+            }).then(async (result) => {
+                const produits = await result.json()
+                produits.forEach(prd => this.produits.push(prd))
+            })
         },
         async deleteProduit(idProduit) {
             await fetch(`${apiUrl}/api/produits/${idProduit}`, {
