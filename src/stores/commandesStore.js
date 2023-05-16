@@ -30,6 +30,7 @@ export const commandesStore = defineStore('commandesStore', {
                     })
                 })
                 .then(() => {
+                    this.ws = null
                     if (this.ws === null) {
                         this.ws = new WebSocket(`ws://k-gouzien.fr:86/websocket/user/commandes`)
 
@@ -84,17 +85,7 @@ export const commandesStore = defineStore('commandesStore', {
                         this.ws = new WebSocket(`ws://k-gouzien.fr:86/websocket/restaurants/commandes`)
 
                         this.ws.onmessage = (e) => {
-
-                            if(!JSON.parse(e.data).Success && !JSON.parse(e.data).Error) {
-                                const commandeUpdate = JSON.parse(e.data)
-                                if (commandeUpdate.message) {
-                                    this.commandes.forEach(command => {
-                                        if(command.id === commandeUpdate.id) {
-                                            command.completed = true
-                                        }
-                                    })
-                                }
-                            }
+                            this.commandes.push(JSON.parse(e.data))
                         }
 
                         this.ws.onopen = () => {
@@ -117,7 +108,12 @@ export const commandesStore = defineStore('commandesStore', {
                     'Authorization': `Bearer ${localStorage.getItem("token")}`
                 },
                 body : JSON.stringify(panier)
-            })
+            }).then(
+                () => {
+                    console.log(panier)
+                    console.log(this.commandes[0])
+                }
+            )
         },
         clearCommandes() {
             this.commandes = []
