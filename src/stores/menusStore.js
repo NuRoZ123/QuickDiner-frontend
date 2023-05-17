@@ -17,13 +17,7 @@ const menuStore = defineStore("menuStore", {
                     'Access-Control-Allow-Origin': '*',
                 },
             }).then(async (result) => {
-                const listOfTypeInMenus = _.map(_.uniqBy(this.menus, 'typeProduit'), 'typeProduit')
-                const listOfTypeMenus = await result.json()
-
-                console.log(listOfTypeInMenus)
-                console.log(listOfTypeInMenus.filter(element => listOfTypeMenus.includes(element)))
-                this.typeMenu = listOfTypeInMenus.filter(element => listOfTypeMenus.includes(element))
-
+                this.typeMenu = await result.json()
             })
         },
         async getAllMenu(idRetaurant) {
@@ -35,6 +29,10 @@ const menuStore = defineStore("menuStore", {
                 },
             }).then(async (result) => this.menus = await result.json())
         },
+        getTypeParRestaurant() {
+            const listOfTypeInMenus = _.map(_.uniqBy(this.menus, 'typeProduit'), 'typeProduit')
+            return listOfTypeInMenus.filter(element => this.typeMenu.includes(element))
+        }
     }
 })
 

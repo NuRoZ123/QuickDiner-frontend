@@ -36,7 +36,7 @@ const addProduit = () => {
 </script>
 
 <template>
-    <div class="flex flex-col shadow p-2 h-[304px] w-96 border border-gray-200 items-center mx-4 my-auto">
+    <div class="flex flex-col shadow h-[304px] w-96 border border-gray-200 items-center mx-4 mt-auto">
         <div class="flex justify-center items-center w-full justify-around h-36">
             <div class="relative w-28 h-28">
                 <img :src="produit.image"  alt="image-du-produit" class="absolute w-full h-full">
