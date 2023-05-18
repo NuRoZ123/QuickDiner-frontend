@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col w-[600px] h-[420px] justify-center items-center shadow border border-gray-200 py-10">
-        <span class="text-2xl font-bold mb-6">Créer un compte</span>
+        <span class="text-2xl font-bold mb-6">Profil du compte</span>
 
         <div class="flex mb-6 w-[560px] justify-between items-center">
             <div class="flex flex-col">
@@ -32,7 +32,7 @@
 
 
 
-        <button class="rounded-3xl w-[560px] py-2 bg-black text-white" type="submit" @click="updateUser()">Register</button>
+        <button class="rounded-3xl w-[560px] py-2 bg-black text-white" type="submit" @click="updateUser()">Modifier</button>
     </div>
 </template>
 

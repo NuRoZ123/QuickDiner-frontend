@@ -27,6 +27,17 @@ export const restaurantsStore = defineStore('restaurantsStore', {
                 },
             })
                 .then(async (result) => this.restaurant = await result.json())
+        },
+        async updateRestaurant(restaurant) {
+            await fetch(`${apiUrl}/api/restaurants`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    'Authorization': `Bearer ${localStorage.getItem("token")}`
+                },
+                body: JSON.stringify(restaurant)
+            })
         }
     }
 })

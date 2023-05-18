@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col w-[600px] h-[420px] items-center shadow border border-gray-200 py-10">
+  <div class="flex flex-col w-[600px] h-[420px] items-center shadow border border-gray-200 py-10 max-lg:mt-10">
       <span class="text-2xl font-bold mb-6">Se connecter</span>
 
       <div class="flex flex-col w-[560px] my-auto">
