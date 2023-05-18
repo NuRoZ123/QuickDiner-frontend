@@ -2,7 +2,10 @@
 import {reactive, defineProps, defineEmits} from "vue";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import {produitStore} from "@/stores/produitStore";
+import {menuStore} from "@/stores/menusStore";
 
+const storeMenu = menuStore()
+storeMenu.getAllTypeOfMenus()
 const storeProduit = produitStore()
 
 const emit = defineEmits(['toggleModify'])
@@ -13,6 +16,7 @@ const produit = reactive({
     image:  props.produit.image,
     prix:  props.produit.prix,
     description:  props.produit.description,
+    typeProduit: props.produit.typeProduit,
     id: props.produit.id
 })
 
@@ -28,7 +32,7 @@ const updateImage = (e) => {
 }
 
 const modifyProduit = () => {
-    if (produit.nom && produit.image && produit.prix && produit.description) {
+    if (produit.nom && produit.image && produit.prix && produit.description && produit.typeProduit) {
         storeProduit.modifyProduit(produit)
         emit('toggleModify')
     }
@@ -51,6 +55,10 @@ const modifyProduit = () => {
             </div>
         </div>
         <div class="flex flex-col w-full">
+          <label for="typeMenu" class="font-bold">Type de produit</label>
+          <select class="px-2 py-1 w-full rounded-md mb-2 border-gray-300 border" v-model="produit.typeProduit">
+            <option v-for="typeProduit of storeMenu.typeMenu" name="typeMenu" :value="typeProduit" :key="typeProduit">{{typeProduit}}</option>
+          </select>
             <label class="font-bold" for="textarea">Description</label>
             <textarea class="px-2 py-1 w-full rounded-md mb-2 border-gray-300 border  h-20" v-model='produit.description'></textarea>
         </div>
