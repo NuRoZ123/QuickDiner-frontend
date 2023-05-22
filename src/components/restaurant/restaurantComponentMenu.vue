@@ -12,7 +12,7 @@
                   <span class="ml-0.5 text-gray-500">{{restaurant.restaurant.ville}}</span>
               </div>
           </div>
-          <iframe class="h-auto w-2/3 ml-full mr-48" :src="`https://maps.google.com/maps?width=100%25&amp;height=200&amp;hl=en&amp;q=${restaurant.restaurant.latitude},${restaurant.restaurant.longitude}+(${restaurant.restaurant.nom})&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed`"></iframe>
+          <iframe class="h-auto w-2/3 ml-full mr-48" :src="`https://maps.google.com/maps?width=100%25&amp;height=200&amp;hl=en&amp;q=${restaurant.restaurant.latitude},${restaurant.restaurant.longitude}+(${restaurant.restaurant.nom})&amp;t=&amp;z=16&amp;ie=UTF8&amp;iwloc=B&amp;output=embed`"></iframe>
       </div>
   </div>
 </template>

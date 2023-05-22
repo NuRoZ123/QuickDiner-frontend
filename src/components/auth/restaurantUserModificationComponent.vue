@@ -15,6 +15,7 @@ const restaurant = reactive({
   nom : storeProduit.restaurantOwn.nom,
   adresse : storeProduit.restaurantOwn.adresse,
   image : storeProduit.restaurantOwn.image,
+  ville : storeProduit.restaurantOwn.ville
 })
 
 const updateRestaurant = () => {
@@ -41,19 +42,21 @@ const imageLoaded = ref(false)
   <div class="flex flex-col w-[600px] h-[420px] justify-center items-center shadow border border-gray-200 py-10 mt-10">
     <span class="text-2xl font-bold mb-6">Modifier le restaurant</span>
 
-    <div class="flex w-full">
-      <div class="relative w-56 h-40">
+    <div class="flex w-full justify-center items-center">
+      <div class="relative w-44 h-44">
         <div class="w-full h-full absolute">
           <img class="absolute z-[1] w-full h-full" :src="restaurant.image" alt="image-du-produit" @load="imageLoaded = true">
           <div v-show="!imageLoaded" class="absolute bg-gray-300 w-full h-full justify-center items-center flex"><font-awesome-icon class="w-12 h-12 text-white" icon="fa-solid fa-plus"></font-awesome-icon></div>
         </div>
         <input type="file" accept="image/*" class="absolute z-[2] cursor-pointer opacity-0 w-full h-full" @change="updateImage">
       </div>
-      <div class="flex flex-col my-auto w-[560px] ml-6">
+      <div class="flex flex-col my-auto w-[360px] ml-6 justify-center">
         <label class="font-bold" for="name">Nom</label>
-        <input class="w-[400px] px-2 py-1 rounded-md border-gray-300 border" type="text" id="name" placeholder="nom" v-model="restaurant.nom">
+        <input class="w-[340px] px-2 py-1 rounded-md border-gray-300 border" type="text" id="name" placeholder="nom" v-model="restaurant.nom">
         <label class="font-bold" for="adresse">Adresse</label>
-        <input class="w-[400px] px-2 py-1 rounded-md border-gray-300 border" type="text" id="adresse" placeholder="adresse" v-model="restaurant.adresse">
+        <input class="w-[340px] px-2 py-1 rounded-md border-gray-300 border" type="text" id="adresse" placeholder="adresse" v-model="restaurant.adresse">
+        <label class="font-bold" for="ville">Ville</label>
+        <input class="w-[340px] px-2 py-1 rounded-md border-gray-300 border" type="text" id="ville" placeholder="ville" v-model="restaurant.ville">
       </div>
     </div>
 

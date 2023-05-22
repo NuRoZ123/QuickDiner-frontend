@@ -41,14 +41,16 @@
 
             <div v-if="typeAccount === 'Commercant'" class="flex flex-col">
                 <label class="font-bold" for="imageRestaurant">Information sur le restaurant</label>
-                <div class="flex w-[560px]">
-                    <div class="relative w-24 h-24 bg-gray-500 mr-4">
-                        <font-awesome-icon class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-20 text-white" icon="fa-regular fa-file"></font-awesome-icon>
-                        <input id="imageRestaurant" class="absolute opacity-0 w-full h-full" type="file" accept="image/*" @change="updateImage">
+                <div class="flex w-[560px] relative">
+                    <div class="w-40 h-40">
+                      <img class="absolute z-[1] w-40 h-40" :src="restaurant.image" alt="image-du-produit" @load="imageLoaded = true">
+                      <div v-show="!imageLoaded" class="absolute bg-gray-300 w-40 h-40 justify-center items-center flex"><font-awesome-icon class="w-12 h-12 text-white" icon="fa-solid fa-plus"></font-awesome-icon></div>
                     </div>
-                    <div class="flex flex-col w-[464px]">
-                        <input class="px-2 py-1 w-full rounded-md mb-6 border-gray-300 border" id="nomRestaurant" type="nomRestaurant" placeholder="Nom du restaurant" v-model="restaurant.nom">
-                        <input class="px-2 py-1 w-full rounded-md mb-6 border-gray-300 border" id="adresseRestaurant" type="adresseRestaurant" placeholder="Adresse du restaurant" v-model="restaurant.adresse">
+                    <input type="file" accept="image/*" class="absolute z-[2] cursor-pointer opacity-0 w-40 h-40" @change="updateImage">
+                    <div class="flex flex-col w-[300px] mx-auto">
+                        <input class="px-2 py-1 w-full rounded-md mb-6 border-gray-300 border" id="nomRestaurant" type="text" placeholder="Nom du restaurant" v-model="restaurant.nom">
+                        <input class="px-2 py-1 w-full rounded-md mb-6 border-gray-300 border" id="adresseRestaurant" type="text" placeholder="Adresse du restaurant" v-model="restaurant.adresse">
+                        <input class="px-2 py-1 w-full rounded-md mb-6 border-gray-300 border" id="villeRestaurant" type="text" placeholder="Ville du restaurant" v-model="restaurant.ville">
                     </div>
                 </div>
 
@@ -84,7 +86,8 @@ const typeAccount = ref("Client")
 const restaurant = reactive({
     nom: '',
     adresse: '',
-    image: ''
+    image: '',
+    ville : '',
 })
 
 const updateImage = (e) => {
@@ -97,6 +100,8 @@ const updateImage = (e) => {
 
     reader.readAsDataURL(file)
 }
+
+const imageLoaded = ref(false)
 
 const saveUser = async () => {
 
@@ -140,6 +145,10 @@ const saveUser = async () => {
         if(!restaurant.image) {
             storeAuth.pushErrors("Renseignez l'image du restaurant")
         }
+
+      if(!restaurant.ville) {
+        storeAuth.pushErrors("Renseignez la ville du restaurant")
+      }
     }
 
     if (storeAuth.errors.length === 0) {
