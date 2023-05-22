@@ -29,7 +29,7 @@ const commentaireVoteStore = defineStore('commentaireVoteStore', {
             }).then(async (result) => {
                 const res = await result.text()
                 const user = authStore().user
-                const commentaireNew = { nomUtilisateur: user.split(" ")[0].toLowerCase() , idCommercant: id, commentaire: commentaireVote.commentaire, note: commentaireVote.note }
+                const commentaireNew = { nomUtilisateur: user.split(" ")[1].toLowerCase() , idCommercant: id, commentaire: commentaireVote.commentaire, note: commentaireVote.note }
 
                 if (result.status === 400) {
                     authStore().pushErrors(res)

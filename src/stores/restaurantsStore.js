@@ -1,6 +1,6 @@
 import {defineStore} from "pinia";
 import {authStore} from "@/stores/authStore";
-import {round} from "lodash";
+import _, {round} from "lodash";
 
 const apiUrl = 'https://quick-diner.k-gouzien.fr'
 
@@ -8,8 +8,9 @@ export const restaurantsStore = defineStore('restaurantsStore', {
     state : () => ({
         restaurants : [],
         restaurant: {},
-        filter: {name: "", avgPrice: null, note: 0},
-        maxPrice: null
+        filter: {name: "", avgPrice: null, note: 0, ville : ""},
+        maxPrice: null,
+        restaurantsVille : []
     }),
     actions : {
         async getRestaurants () {
@@ -25,7 +26,7 @@ export const restaurantsStore = defineStore('restaurantsStore', {
                     const maxPrice = this.restaurants.reduce((max, objet) => (objet.prixMoyen > max) ? objet.prixMoyen : max, this.restaurants[0].prixMoyen)
                     this.filter.avgPrice = round(maxPrice)
                     this.maxPrice = round(maxPrice)
-
+                    this.restaurantsVille = _.map(_.uniqBy(this.restaurants, 'restaurant.ville'), 'restaurant.ville')
                 })
         },
         async getRestaurant(idRestaurant) {
@@ -66,11 +67,13 @@ export const restaurantsStore = defineStore('restaurantsStore', {
                     const nom = res.nom.toLowerCase()
                     const avgPrice = restaurant.prixMoyen
                     const note = restaurant.note
+                    const ville = res.ville
 
                     return (
                         (this.filter.avgPrice === 0 || avgPrice <= this.filter.avgPrice) &&
                         (this.filter.name === "" || nom.includes(this.filter.name.toLowerCase())) &&
-                        (this.filter.note === 0 || note >= this.filter.note)
+                        (this.filter.note === 0 || note >= this.filter.note) &&
+                        (this.filter.ville === "" || ville.toLowerCase().includes(this.filter.ville.toLowerCase()))
                     );
 
                 })
@@ -78,6 +81,9 @@ export const restaurantsStore = defineStore('restaurantsStore', {
             } else {
                 return this.restaurants
             }
+        },
+        filterVilleRestaurant () {
+            return this.restaurantsVille.filter(ville => ville.toLowerCase().includes(this.filter.ville.toLowerCase()))
         }
     }
 })
