@@ -7,7 +7,8 @@ export const restaurantsStore = defineStore('restaurantsStore', {
     state : () => ({
         restaurants : [],
         restaurant: {},
-        filter: ""
+        filter: {name: "", avgPrice: null},
+        maxPrice: null
     }),
     actions : {
         async getRestaurants () {
@@ -18,7 +19,13 @@ export const restaurantsStore = defineStore('restaurantsStore', {
                     'Access-Control-Allow-Origin': '*',
                 },
             })
-                .then(async (result) => this.restaurants = await result.json())
+                .then(async (result) => {
+                    this.restaurants = await result.json()
+                    const maxPrice = this.restaurants.reduce((max, objet) => (objet.prixMoyen > max) ? objet.prixMoyen : max, this.restaurants[0].prixMoyen)
+                    this.filter.avgPrice = maxPrice
+                    this.maxPrice = maxPrice
+
+                })
         },
         async getRestaurant(idRestaurant) {
             await fetch(`${apiUrl}/api/restaurants/${idRestaurant}`, {
@@ -51,8 +58,25 @@ export const restaurantsStore = defineStore('restaurantsStore', {
             })
         },
         filterRestaurant() {
-            if(this.filter) {
-                return this.restaurants.filter(restaurant => restaurant.restaurant.nom.toLowerCase().includes(this.filter.toLowerCase()))
+            if(this.filter.avgPrice !== 0 || this.filter.name !== "") {
+                return this.restaurants.filter(restaurant => {
+                    const res = restaurant.restaurant
+                    const nom = res.nom.toLowerCase()
+                    const avgPrice = restaurant.prixMoyen
+
+                    if(this.filter.avgPrice !== 0 && this.filter.name !== "") {
+                        return nom.includes(this.filter.name.toLowerCase()) && avgPrice <= this.filter.avgPrice
+                    }
+
+                    else if (this.filter.avgPrice !== 0 && this.filter.name === "") {
+                        return avgPrice <= this.filter.avgPrice
+                    }
+
+                    else if (this.filter.avgPrice === 0 && this.filter.name !== "") {
+                        return nom.includes(this.filter.name.toLowerCase())
+                    }
+
+                })
 
             } else {
                 return this.restaurants

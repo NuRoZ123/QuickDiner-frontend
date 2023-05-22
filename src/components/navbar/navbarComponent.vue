@@ -27,7 +27,7 @@ const storeRestaurants = restaurantsStore()
       </div>
 
       <div v-if="route.name === 'home'" class="relative col-start-3 col-end-7">
-          <input v-model="storeRestaurants.filter" type="text" class="bg-gray-200 rounded-3xl p-2 px-12 w-full" placeholder="Rechercher...">
+          <input v-model="storeRestaurants.filter.name" type="text" class="bg-gray-200 rounded-3xl p-2 px-12 w-full" placeholder="Rechercher...">
           <font-awesome-icon icon="fa-solid fa-magnifying-glass" class="absolute top-1/2 left-4 -translate-y-1/2"></font-awesome-icon>
       </div>
 
