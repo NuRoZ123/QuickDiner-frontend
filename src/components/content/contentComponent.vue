@@ -2,6 +2,7 @@
   <div class="flex mt-10 h-full w-full overflow-hidden">
       <filter-component></filter-component>
       <restaurants-component></restaurants-component>
+
   </div>
 </template>
 

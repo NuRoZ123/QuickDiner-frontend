@@ -26,7 +26,7 @@ export const restaurantsStore = defineStore('restaurantsStore', {
                     const maxPrice = this.restaurants.reduce((max, objet) => (objet.prixMoyen > max) ? objet.prixMoyen : max, this.restaurants[0].prixMoyen)
                     this.filter.avgPrice = round(maxPrice)
                     this.maxPrice = round(maxPrice)
-                    this.restaurantsVille = _.map(_.uniqBy(this.restaurants, 'restaurant.ville'), 'restaurant.ville')
+                    this.restaurantsVille = _.map(_.uniqBy(this.restaurants, item => item.restaurant.ville.toLowerCase()), 'restaurant.ville')
                 })
         },
         async getRestaurant(idRestaurant) {
