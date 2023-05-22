@@ -17,6 +17,8 @@
             <span class="text-3xl flex w-full justify-center items-center my-4">Commentaires</span>
 
             <div class="h-auto w-full flex flex-col justify-center items-center mt-16">
+                <errors-component v-if="storeAuth.errors.length > 0"></errors-component>
+                <success-component v-if="storeAuth.success.length > 0"></success-component>
                 <commentaire-modif-component v-if="storeAuth.role === 'Client'"></commentaire-modif-component>
                 <commentaire-component v-for="commentaireVote of storeCommentaireVote.commentaires" :key="commentaireVote" :commentaire="commentaireVote"></commentaire-component>
             </div>
@@ -38,6 +40,8 @@ import CommentaireComponent from "@/components/commentaires/commentaireComponent
 import {commentaireVoteStore} from "@/stores/commentaireVoteStore";
 import CommentaireModifComponent from "@/components/commentaires/commentaireModifComponent.vue";
 import {authStore} from "@/stores/authStore";
+import ErrorsComponent from "@/components/errors/errorsComponent.vue";
+import SuccessComponent from "@/components/errors/successComponent.vue";
 const storeMenu = menuStore()
 const storeRestaurant = restaurantsStore()
 const storeCommentaireVote = commentaireVoteStore()

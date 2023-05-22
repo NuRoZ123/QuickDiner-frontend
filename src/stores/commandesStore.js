@@ -84,8 +84,11 @@ export const commandesStore = defineStore('commandesStore', {
                         this.ws = new WebSocket(`ws://k-gouzien.fr:86/websocket/restaurants/commandes`)
 
                         this.ws.onmessage = (e) => {
-                            this.commandes.push(JSON.parse(e.data))
+                            if(!JSON.parse(e.data).Success && !JSON.parse(e.data).Error) {
+                                this.commandes.push(JSON.parse(e.data))
+                            }
                         }
+
 
                         this.ws.onopen = () => {
                             this.ws.send(JSON.stringify({token: `Bearer ${localStorage.getItem("token")}`}))

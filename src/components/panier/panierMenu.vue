@@ -35,12 +35,15 @@ const sendCommande = async () => {
     }
 
     if(storeAuth.token) {
-        await storeCommande.sendCommande(commande)
+      await storeCommande.sendCommande(commande)
+      if (storePanier.panier.length > 0) {
+        await router.push('/commandes')
         await storePanier.clearPanier()
-        panierMenu.value = false
+      }
+      panierMenu.value = false
     } else {
-        await router.push('/authentification')
-        panierMenu.value = false
+      await router.push('/authentification')
+      panierMenu.value = false
     }
 }
 

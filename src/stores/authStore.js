@@ -8,6 +8,7 @@ const authStore = defineStore('authStore', {
         user : "",
         typeOfAccount: [],
         errors : [],
+        success : [],
         role : ""
     }),
     actions : {
@@ -64,6 +65,8 @@ const authStore = defineStore('authStore', {
             }).then(async (result) => {
                 if (result.status !== 400)  {
                     this.token = await result.text()
+                    authStore().pushSuccess("Le compte à bien été modifier")
+                    setTimeout(() => authStore().resetErrors(), 2000)
                     localStorage.setItem('token', this.token)
                     await this.reconnect()
                 }
@@ -94,8 +97,12 @@ const authStore = defineStore('authStore', {
         pushErrors(err) {
             this.errors.push(err)
         },
+        pushSuccess(success) {
+            this.success.push(success)
+        },
         resetErrors() {
             this.errors = []
+            this.success = []
         }
     }
 })

@@ -1,11 +1,13 @@
 import {defineStore} from "pinia";
+import {authStore} from "@/stores/authStore";
 
 const apiUrl = 'https://quick-diner.k-gouzien.fr'
 
 export const restaurantsStore = defineStore('restaurantsStore', {
     state : () => ({
         restaurants : [],
-        restaurant: {}
+        restaurant: {},
+        filter: ""
     }),
     actions : {
         async getRestaurants () {
@@ -37,7 +39,24 @@ export const restaurantsStore = defineStore('restaurantsStore', {
                     'Authorization': `Bearer ${localStorage.getItem("token")}`
                 },
                 body: JSON.stringify(restaurant)
+            }).then(async (result) => {
+                if (result.status === 400) {
+                    authStore().pushErrors("Veuillez compléter les champs")
+                }
+
+                if (result.status === 200) {
+                    authStore().pushSuccess("Le restaurant à bien été modifier")
+                }
+                setTimeout(() => authStore().resetErrors(), 2000)
             })
+        },
+        filterRestaurant() {
+            if(this.filter) {
+                return this.restaurants.filter(restaurant => restaurant.restaurant.nom.toLowerCase().includes(this.filter.toLowerCase()))
+
+            } else {
+                return this.restaurants
+            }
         }
     }
 })

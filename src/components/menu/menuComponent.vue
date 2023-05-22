@@ -27,11 +27,8 @@ const props = defineProps(['menu'])
 const storePanier = panierStore()
 const storeAuth = authStore()
 
-
-console.log(props.menu)
 const getQuantity = (addOrRemove) => {
     if(addOrRemove === "plus") {
-
         storePanier.addProduit(props.menu)
     } else {
         storePanier.removeProduitId(props.menu.id)

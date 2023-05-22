@@ -4,12 +4,13 @@ import {useRoute} from "vue-router";
 import {authStore} from "@/stores/authStore";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import {panierStore} from "@/stores/panierStore";
+import {restaurantsStore} from "@/stores/restaurantsStore";
 
 const route = useRoute()
 
 const storeAuth = authStore()
 const storePanier = panierStore()
-
+const storeRestaurants = restaurantsStore()
 </script>
 
 <template>
@@ -26,7 +27,7 @@ const storePanier = panierStore()
       </div>
 
       <div v-if="route.name === 'home'" class="relative col-start-3 col-end-7">
-          <input type="text" class="bg-gray-200 rounded-3xl p-2 px-12 w-full" placeholder="Rechercher...">
+          <input v-model="storeRestaurants.filter" type="text" class="bg-gray-200 rounded-3xl p-2 px-12 w-full" placeholder="Rechercher...">
           <font-awesome-icon icon="fa-solid fa-magnifying-glass" class="absolute top-1/2 left-4 -translate-y-1/2"></font-awesome-icon>
       </div>
 
