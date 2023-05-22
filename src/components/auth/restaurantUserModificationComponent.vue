@@ -1,8 +1,9 @@
 <script setup>
 
-import {reactive} from "vue";
+import {reactive, ref} from "vue";
 import {produitStore} from "@/stores/produitStore";
 import {restaurantsStore} from "@/stores/restaurantsStore";
+import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 
 
 const storeProduit = produitStore()
@@ -32,6 +33,8 @@ const updateImage = (e) => {
 
   reader.readAsDataURL(file)
 }
+
+const imageLoaded = ref(false)
 </script>
 
 <template>
@@ -40,8 +43,11 @@ const updateImage = (e) => {
 
     <div class="flex w-full">
       <div class="relative w-56 h-40">
-        <img :src="restaurant.image"  alt="image-du-produit" class="absolute w-full h-full">
-        <input type="file" accept="image/*" class="absolute opacity-0 w-full h-full" @change="updateImage">
+        <div class="w-full h-full absolute">
+          <img class="absolute z-[1] w-full h-full" :src="restaurant.image" alt="image-du-produit" @load="imageLoaded = true">
+          <div v-show="!imageLoaded" class="absolute bg-gray-300 w-full h-full justify-center items-center flex"><font-awesome-icon class="w-12 h-12 text-white" icon="fa-solid fa-plus"></font-awesome-icon></div>
+        </div>
+        <input type="file" accept="image/*" class="absolute z-[2] cursor-pointer opacity-0 w-full h-full" @change="updateImage">
       </div>
       <div class="flex flex-col my-auto w-[560px] ml-6">
         <label class="font-bold" for="name">Nom</label>

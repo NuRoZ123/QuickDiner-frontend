@@ -1,5 +1,5 @@
 <script setup>
-import {reactive} from "vue";
+import {reactive, ref} from "vue";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import {produitStore} from "@/stores/produitStore";
 import {menuStore} from "@/stores/menusStore";
@@ -39,14 +39,19 @@ const addProduit = () => {
         produit.typeProduit = ''
     }
 }
+
+const imageLoaded = ref(false)
 </script>
 
 <template>
-    <div class="flex flex-col shadow h-[380px] w-96 border border-gray-200 items-center mx-4 mt-auto">
+    <div class="flex flex-col shadow h-[380px] w-96 border border-gray-200 items-center mx-4">
         <div class="flex justify-center items-center w-full justify-around h-36">
             <div class="relative w-28 h-28">
-                <img :src="produit.image"  alt="image-du-produit" class="absolute w-full h-full">
-                <input type="file" accept="image/*" class="absolute opacity-0 w-full h-full" @change="updateImage">
+              <div class="w-28 h-28 absolute">
+                <img class="absolute z-[1] w-full h-full" :src="produit.image" alt="image-du-produit" @load="imageLoaded = true">
+                <div v-show="!imageLoaded" class="absolute bg-gray-300 w-full h-full justify-center items-center flex"><font-awesome-icon class="w-12 h-12 text-white" icon="fa-solid fa-plus"></font-awesome-icon></div>
+              </div>
+              <input type="file" accept="image/*" class="absolute z-[2] cursor-pointer opacity-0 w-full h-full" @change="updateImage">
 
             </div>
             <div class="flex flex-col">

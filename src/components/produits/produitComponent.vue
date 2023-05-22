@@ -12,6 +12,8 @@ const storeProduit = produitStore()
 const deleteProduit = () => {
     storeProduit.deleteProduit(props.produit.id)
 }
+
+const imageLoaded = ref(false)
 </script>
 
 <template>
@@ -28,7 +30,10 @@ const deleteProduit = () => {
         </div>
 
           <div class="flex justify-center items-center mx-4 mt-2 w-full justify-around">
-              <img :src="produit.image" :alt="`image-${produit.nom}`" class="w-28 h-28">
+              <div class="w-28 h-28 relative">
+                <img class="absolute z-[1] w-full h-full" :src="produit.image" :alt="`produit-${produit.nom}`" @load="imageLoaded = true">
+                <div v-show="!imageLoaded" class="absolute bg-gray-300 w-full h-full"></div>
+              </div>
               <div class="flex flex-col w-60 ml-5">
                   <span>{{produit.nom}}</span>
                   <span>{{produit.prix}} €</span>

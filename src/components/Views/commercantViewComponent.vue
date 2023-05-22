@@ -12,7 +12,7 @@ const storeProduit = produitStore()
         <navbar-component></navbar-component>
         <div class="flex flex-wrap flex-row justify-evenly h-auto overflow-y-auto">
             <produit-component v-for="produit of storeProduit.produits" :key="produit.id" :produit="produit"></produit-component>
-            <produit-create-component></produit-create-component>
+            <produit-create-component :class="storeProduit.produits.length%3 === 0 ? 'mt-12' : 'mt-auto'"></produit-create-component>
         </div>
     </div>
 </template>

@@ -1,7 +1,10 @@
 <template>
     <div class="flex flex-col mx-8 mt-8">
         <div class="flex flex-row">
-            <img class="h-20 w-20" :src="menu.image" :alt="`${menu.nom}-image`">
+            <div class="w-20 h-20 relative">
+              <img class="absolute z-[1] w-full h-full" :src="menu.image" :alt="`menu-${menu.nom}`" @load="imageLoaded = true">
+              <div v-show="!imageLoaded" class="absolute bg-gray-300 w-full h-full"></div>
+            </div>
             <div class="flex flex-col ml-2">
                 <span class="font-bold">{{menu.nom}}</span>
                 <span>{{menu.prix}} €</span>
@@ -17,7 +20,7 @@
 </template>
 
 <script setup>
-import {defineProps} from 'vue'
+import {defineProps, ref} from 'vue'
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import {panierStore} from "@/stores/panierStore";
 const props = defineProps(['menu'])
@@ -31,6 +34,8 @@ const getQuantity = (addOrRemove) => {
         storePanier.removeProduitId(props.menu.id)
     }
 }
+
+const imageLoaded = ref(false)
 </script>
 
 <style scoped>

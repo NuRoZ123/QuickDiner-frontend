@@ -1,5 +1,5 @@
 <script setup>
-import {reactive, defineProps, defineEmits} from "vue";
+import {reactive, defineProps, defineEmits, ref} from "vue";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import {produitStore} from "@/stores/produitStore";
 import {menuStore} from "@/stores/menusStore";
@@ -37,14 +37,19 @@ const modifyProduit = () => {
         emit('toggleModify')
     }
 }
+
+const imageLoaded = ref(false)
 </script>
 
 <template>
     <div class="flex flex-col p-2 h-[304px] w-96 items-center mx-4">
         <div class="flex justify-center items-center w-full justify-around h-36">
             <div class="relative w-28 h-28">
-                <img :src="produit.image"  alt="image-du-produit" class="absolute w-full h-full">
-                <input type="file" accept="image/*" class="absolute opacity-0 w-full h-full" @change="updateImage">
+              <div class="w-28 h-28 absolute">
+                <img class="absolute z-[1] w-full h-full" :src="produit.image" alt="image-du-produit" @load="imageLoaded = true">
+                <div v-show="!imageLoaded" class="absolute bg-gray-300 w-full h-full justify-center items-center flex"><font-awesome-icon class="w-12 h-12 text-white" icon="fa-solid fa-plus"></font-awesome-icon></div>
+              </div>
+              <input type="file" accept="image/*" class="absolute z-[2] cursor-pointer opacity-0 w-full h-full" @change="updateImage">
 
             </div>
             <div class="flex flex-col">

@@ -1,7 +1,9 @@
 <script setup>
-import {defineProps} from 'vue'
+import {defineProps, ref} from 'vue'
 
 const props = defineProps(['commande'])
+
+const imageLoaded = ref(false)
 
 const totalPrice = () => {
     let price = 0
@@ -27,7 +29,11 @@ const totalPrice = () => {
 
         <div class="h-full overflow-y-auto flex flex-col justify-center py-5">
             <div class="flex ml-20 h-auto mt-4 items-center" v-for="produit of commande.produitsCommander" :key="produit">
-                <img class="w-20 h-20" :src="produit.produit.image" :alt="`produit-${produit.produit.nom}`">
+              <div class="w-20 h-20 relative">
+                <img class="absolute z-[1] w-full h-full" :src="produit.produit.image" :alt="`produit-${produit.produit.nom}`" @load="imageLoaded = true">
+                <div v-show="!imageLoaded" class="absolute bg-gray-300 w-full h-full"></div>
+              </div>
+
                 <div class="flex flex-col justify-center ml-10">
                     <span>nom : {{produit.produit.nom}}</span>
                     <span>quantité : {{produit.quantite}}</span>
