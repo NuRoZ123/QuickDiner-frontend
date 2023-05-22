@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col ml-5 w-auto">
+    <div class="flex flex-col w-auto">
         <input class="bg-gray-200 rounded-3xl p-2 px-4 w-full" type="text" v-model="query" @input="searchResult()" placeholder="Adresse...">
         <ul class="shadow">
             <li class="border pl-2 py-2 flex items-center cursor-pointer" v-for="result in results.value" :key="result.id" @click="changeQueryValue(result.properties)" v-show="result.properties.housenumber || result.properties.street || result.properties.city">

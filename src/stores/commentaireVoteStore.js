@@ -28,11 +28,15 @@ const commentaireVoteStore = defineStore('commentaireVoteStore', {
                 body: JSON.stringify(commentaireVote)
             }).then(async (result) => {
                 const res = await result.text()
+                const user = authStore().user
+                const commentaireNew = { nomUtilisateur: user.split(" ")[0].toLowerCase() , idCommercant: id, commentaire: commentaireVote.commentaire, note: commentaireVote.note }
+
                 if (result.status === 400) {
                     authStore().pushErrors(res)
                 }
 
                 if (result.status === 200) {
+                    this.commentaires.push(commentaireNew)
                     authStore().pushSuccess(res)
                 }
                 setTimeout(() => authStore().resetErrors(), 2000)

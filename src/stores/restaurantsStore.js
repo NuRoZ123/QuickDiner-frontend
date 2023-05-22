@@ -1,5 +1,6 @@
 import {defineStore} from "pinia";
 import {authStore} from "@/stores/authStore";
+import {round} from "lodash";
 
 const apiUrl = 'https://quick-diner.k-gouzien.fr'
 
@@ -7,7 +8,7 @@ export const restaurantsStore = defineStore('restaurantsStore', {
     state : () => ({
         restaurants : [],
         restaurant: {},
-        filter: {name: "", avgPrice: null},
+        filter: {name: "", avgPrice: null, note: 0},
         maxPrice: null
     }),
     actions : {
@@ -22,8 +23,8 @@ export const restaurantsStore = defineStore('restaurantsStore', {
                 .then(async (result) => {
                     this.restaurants = await result.json()
                     const maxPrice = this.restaurants.reduce((max, objet) => (objet.prixMoyen > max) ? objet.prixMoyen : max, this.restaurants[0].prixMoyen)
-                    this.filter.avgPrice = maxPrice
-                    this.maxPrice = maxPrice
+                    this.filter.avgPrice = round(maxPrice)
+                    this.maxPrice = round(maxPrice)
 
                 })
         },
@@ -58,23 +59,19 @@ export const restaurantsStore = defineStore('restaurantsStore', {
             })
         },
         filterRestaurant() {
-            if(this.filter.avgPrice !== 0 || this.filter.name !== "") {
+            console.log(this.restaurants)
+            if(this.filter.avgPrice !== 0 || this.filter.name !== "" || this.filter.note !== 0) {
                 return this.restaurants.filter(restaurant => {
                     const res = restaurant.restaurant
                     const nom = res.nom.toLowerCase()
                     const avgPrice = restaurant.prixMoyen
+                    const note = restaurant.note
 
-                    if(this.filter.avgPrice !== 0 && this.filter.name !== "") {
-                        return nom.includes(this.filter.name.toLowerCase()) && avgPrice <= this.filter.avgPrice
-                    }
-
-                    else if (this.filter.avgPrice !== 0 && this.filter.name === "") {
-                        return avgPrice <= this.filter.avgPrice
-                    }
-
-                    else if (this.filter.avgPrice === 0 && this.filter.name !== "") {
-                        return nom.includes(this.filter.name.toLowerCase())
-                    }
+                    return (
+                        (this.filter.avgPrice === 0 || avgPrice <= this.filter.avgPrice) &&
+                        (this.filter.name === "" || nom.includes(this.filter.name.toLowerCase())) &&
+                        (this.filter.note === 0 || note >= this.filter.note)
+                    );
 
                 })
 

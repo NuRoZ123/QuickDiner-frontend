@@ -9,7 +9,7 @@
           <input v-model="user.password" class="px-2 py-1 w-full rounded-md mb-6 border-gray-300 border" type="password" id="passwordLogin" placeholder="password">
       </div>
 
-      <button class="rounded-3xl w-[560px] py-2 bg-black text-white" type="submit" @click="loginUser()">Login</button>
+      <button class="rounded-3xl w-[560px] py-2 bg-black text-white" type="submit" @click="loginUser()">Se connecter</button>
 
   </div>
 </template>

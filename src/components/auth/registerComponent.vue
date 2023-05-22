@@ -56,7 +56,7 @@
             </div>
         </div>
 
-        <button class="rounded-3xl w-[560px] py-2 bg-black text-white" type="submit" @click="saveUser()">Register</button>
+        <button class="rounded-3xl w-[560px] py-2 bg-black text-white" type="submit" @click="saveUser()">S'enregistrer</button>
 
     </div>
 </template>

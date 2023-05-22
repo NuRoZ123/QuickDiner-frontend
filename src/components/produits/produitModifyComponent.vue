@@ -63,8 +63,8 @@ const modifyProduit = () => {
             <textarea class="px-2 py-1 w-full rounded-md mb-2 border-gray-300 border  h-20" v-model='produit.description'></textarea>
         </div>
         <div class="flex items-center justify-end mt-auto ml-auto">
-            <button class="rounded-3xl w-8 h-8 bg-red-500 text-white" @click="emit('toggleModify')"><font-awesome-icon icon="fa-solid fa-arrow-left"></font-awesome-icon></button>
-            <button @click="modifyProduit()" type="button" class="rounded-3xl mx-2 w-8 h-8 bg-green-500 text-white"><font-awesome-icon icon="fa-solid fa-plus"></font-awesome-icon></button>
+            <button class="rounded-3xl w-8 h-8 bg-red-500 text-white" @click="emit('toggleModify')"><font-awesome-icon icon="fa-solid fa-xmark"></font-awesome-icon></button>
+            <button @click="modifyProduit()" type="button" class="rounded-3xl mx-2 w-8 h-8 bg-green-500 text-white"><font-awesome-icon icon="fa-solid fa-check"></font-awesome-icon></button>
         </div>
     </div>
 </template>

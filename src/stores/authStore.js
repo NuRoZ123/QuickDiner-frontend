@@ -42,7 +42,7 @@ const authStore = defineStore('authStore', {
                     localStorage.setItem('token', this.token)
                     await this.reconnect()
                 } else {
-                    this.pushErrors("Veuillez spécifier un user existant")
+                    this.pushErrors("Identifiants incorrectes")
                 }
             })
         },

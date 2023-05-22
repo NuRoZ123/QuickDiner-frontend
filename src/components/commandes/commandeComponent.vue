@@ -21,7 +21,7 @@ const totalPrice = () => {
             <h1 class="col-start-3 col-end-5 text-3xl mx-auto h-auto">CM-{{commande.id}}</h1>
             <div class="col-start-5 mx-auto">
                 <div v-if="!commande.completed" class="h-8 w-20 rounded-full bg-orange-500 animate-pulse flex justify-center items-center">En Cours</div>
-                <div v-else class="h-8 w-20 rounded-full bg-green-500 flex justify-center items-center">Fini</div>
+                <div v-else class="h-8 w-20 rounded-full bg-green-500 flex justify-center items-center">Terminée</div>
             </div>
         </div>
 

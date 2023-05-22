@@ -40,7 +40,7 @@ const createCommentaire = () => {
               </div>
 
               <div class="w-auto">
-                  <font-awesome-icon v-for="i in range(1,6)" :key="i" icon="fa-solid fa-star" :class="i <= commentaireVote.note ? 'text-yellow-300' : 'text-gray-500'" @click="setCommentaireNote(i)"  />
+                  <font-awesome-icon v-for="i in range(1,6)" :key="i" icon="fa-solid fa-star" :class="i <= commentaireVote.note ? 'text-yellow-300' : 'text-gray-300'" @click="setCommentaireNote(i)"  />
               </div>
           </div>
           <div class="w-auto mx-10 relative">

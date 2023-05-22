@@ -7,7 +7,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import {
     faArrowLeft, faBars,
-    faBasketShopping,
+    faBasketShopping, faCheck,
     faMagnifyingGlass,
     faMapMarkerAlt, faMinus, faPen, faPlus, faStar, faTrash, faUser,
     faXmark
@@ -24,7 +24,7 @@ import UserViewComponent from "@/components/Views/userViewComponent.vue";
 import {faFile} from "@fortawesome/free-regular-svg-icons";
 import CommercantViewComponent from "@/components/Views/commercantViewComponent.vue";
 
-library.add(faMagnifyingGlass, faBasketShopping, faXmark, faMapMarkerAlt, faArrowLeft, faBars, faPlus, faMinus, faTrash, faFile, faPen, faStar, faUser)
+library.add(faMagnifyingGlass, faBasketShopping, faXmark, faMapMarkerAlt, faArrowLeft, faBars, faPlus, faMinus, faTrash, faFile, faPen, faStar, faUser, faCheck)
 
 const router = createRouter({
     history: createWebHistory(),
