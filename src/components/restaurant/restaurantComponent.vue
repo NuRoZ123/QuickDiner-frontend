@@ -8,7 +8,8 @@
           <div class="flex flex-col">
               <span class="pl-1">{{restaurant.restaurant.nom}}</span>
               <span class="pl-1 text-gray-400 text-xs w-32">{{restaurant.restaurant.adresse}}</span>
-            <span class="pl-1 text-gray-400 text-xs w-32">{{restaurant.restaurant.ville}}</span>
+              <span class="pl-1 text-gray-400 text-xs w-32">{{restaurant.restaurant.ville}}</span>
+              <span v-if="restaurant.km !== 0" class="pl-1 text-gray-400 text-xs w-32">{{restaurant.km}} km</span>
           </div>
           <router-link class="flex justify-center items-center ml-auto mr-4" :to="{name: 'restaurant', params: { id: restaurant.restaurant.id}}"><button class="bg-black rounded-3xl text-white py-1 px-3">Voir plus</button></router-link>
       </div>
