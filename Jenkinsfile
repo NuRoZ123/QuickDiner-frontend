@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         REGISTRY_URL = "registry.georgio-sorin.fr"
-        DOCKER_IMAGE_NAME = "api-webflow"
+        DOCKER_IMAGE_NAME = "quick-diner-front"
     }
 
     stages {
